@@ -1,39 +1,37 @@
 #!/usr/bin/env python3 
 
-import datetime, time
+import datetime, time, random
 
 o1 = open("log1.log", 'a')
 o2 = open("log2.log", 'a')
 o3 = open("log3.log", 'a')
 o4 = open("log4.log", 'a')
-print("o1.fileno()=",o1.fileno()) # 3
-print("o2.fileno()=",o2.fileno()) # 4
 
-fmt = "%a %b %d %H:%M:%S %Z %Y"
-
-j = '{"content":{"key1":"value1","key2":{"key2.1":"value2.1","key2.2":"value2.1"},"key3":"Value3"}'
-n = '"note": "note content"'
-x = 'ERROR: could not render object: no such field!\n'
-
-for i in range(10):
-    a = j + ',' + n + '}\n'
-    o1.write(a)
-    o1.flush()
-    time.sleep(0.7)
+def genlog(r):
+    fmt = "%a %b %d %H:%M:%S %Z %Y"
     now = datetime.datetime.today()
     ts = now.strftime(fmt)
-    a = j + ',' + n + ',' + '"at":"' + ts  + '"}\n'
-    o2.write(a)
-    o2.flush()
-    time.sleep(0.7)
-    a = j + ',' + '"at":"' + ts + '"}\n'
-    o3.write(a)
-    o3.flush()
-    time.sleep(0.7)
-    a = x
-    o4.write(a)
-    o4.flush()
-    time.sleep(0.7)
+    j = '{"content":{"key1":"value1","key2":{"key2.1":"value2.1","key2.2":"value2.1"},"key3":"Value3"}'
+    n = '"note": "note content"'
+    x = 'ERROR: could not render object: no such field!\n'
+    if r == 0:
+        return j + ',' + n + '}\n'
+    elif r == 1:
+        return j + ',' + n + ',' + '"at":"' + ts  + '"}\n'
+    elif r == 2:
+        return j + ',' + '"at":"' + ts + '"}\n'
+    else:
+        return x
+
+random.seed()
+
+for i in range(10):
+    for o in (o1, o2, o3, o4):
+        n = random.randint(0,3)
+        a = genlog(n)
+        o.write(a)
+        o.flush()
+        time.sleep(random.random())
 
 o1.close()
 o2.close()
