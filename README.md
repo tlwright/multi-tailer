@@ -11,4 +11,4 @@ and give a coherent single timeline of log messages.
 Run multi-tailer.py in one window and genlogs2.py in another.
 When genlog2 finishes, press ctl-c in the multi-tailer window to stop it.
 
-Tested on Mac OX S Version 10.9.4 with Python 3.4.1.
+Tested on Mac OS X Version 10.9.4 with Python 3.4.1.
