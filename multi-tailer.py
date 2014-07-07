@@ -144,7 +144,7 @@ def putlines():
 
 if __name__ == '__main__':
     startup()
-    debug = True
+    debug = False
     if debug:
         print("logdir=", logdir)
         print("maxwait=", maxwait)
